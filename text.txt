@@ -1,1 +1,5 @@
-the first line in the commitef file 
+the first line in the commited file
+keep doing something
+and again
+again
+#bla bla
