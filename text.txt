@@ -2,4 +2,5 @@ the first line in the commited file
 keep doing something
 and again
 again
-#bla bla
+
+Adding new text to check out one thing
