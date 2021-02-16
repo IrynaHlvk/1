@@ -1,0 +1,93 @@
+{
+	"info": {
+		"_postman_id": "519edec0-d2f8-47c5-a6a6-74dd73eed82e",
+		"name": "DZ_4",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "DZ_4.1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function (){\r",
+							"    pm.response.to.have.status(200)\r",
+							"});\r",
+							"\r",
+							"var response = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"name\", response.name);\r",
+							"\r",
+							"var response_age = response.age;\r",
+							"var request = request.data;\r",
+							"var age = request.age;\r",
+							"\r",
+							"pm.test(\"ages are equal\", function (){\r",
+							"    pm.expect(age).to.be.eql(response_age)\r",
+							"});\r",
+							"\r",
+							"var varname = pm.variables.get(\"name\");\r",
+							"console.log(\"varname \" + varname);\r",
+							"var name = response.name;\r",
+							"\r",
+							"pm.test(\"names are equal\", function (){\r",
+							"    pm.expect(name).to.be.eql(varname)\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "age",
+							"value": "28",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "{{u_salary_1_5_year}}",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Jane",
+							"type": "text"
+						},
+						{
+							"key": "auth_token",
+							"value": "{{auth_token}}",
+							"type": "text"
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://188.130.138.105:5001/get_test_user",
+					"protocol": "http",
+					"host": [
+						"188",
+						"130",
+						"138",
+						"105"
+					],
+					"port": "5001",
+					"path": [
+						"get_test_user"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

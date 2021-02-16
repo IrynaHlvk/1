@@ -1,0 +1,58 @@
+{
+	"info": {
+		"_postman_id": "57bcc45c-da1a-406b-a9f7-493713a4a700",
+		"name": "DZ_5",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "DZ_5.1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var response = JSON.parse(responseBody);\r",
+							"var randomItem = response[Math.floor(Math.random()*response.length)];\r",
+							"var Cur_ID = randomItem.Cur_ID;\r",
+							"console.log(\"Cur_ID = \" + Cur_ID);\r",
+							"\r",
+							"postman.setEnvironmentVariable(\"Cur_ID\", randomItem.Cur_ID);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "auth_token",
+							"value": "{{auth_token}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://188.130.138.105:5001/currency",
+					"protocol": "http",
+					"host": [
+						"188",
+						"130",
+						"138",
+						"105"
+					],
+					"port": "5001",
+					"path": [
+						"currency"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

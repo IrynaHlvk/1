@@ -1,0 +1,281 @@
+{
+	"info": {
+		"_postman_id": "17f6004e-d253-4f82-ba16-85f41224a55b",
+		"name": "Domashka",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "DZ_1",
+			"item": [
+				{
+					"name": "DZ_1.1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable(\"auth_token\",jsonData.token);\r",
+									"\r",
+									"\r",
+									"pm.test(\"code 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"wrong code\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://188.130.138.105:5001/login?login=jane&password=doe555",
+							"protocol": "http",
+							"host": [
+								"188",
+								"130",
+								"138",
+								"105"
+							],
+							"port": "5001",
+							"path": [
+								"login"
+							],
+							"query": [
+								{
+									"key": "login",
+									"value": "jane"
+								},
+								{
+									"key": "password",
+									"value": "doe555"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DZ_1.2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var schema = {\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"person\": {\r",
+									"      \"type\": \"object\",\r",
+									"      \"properties\": {\r",
+									"        \"u_age\": {\r",
+									"          \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"u_name\": {\r",
+									"          \"type\": \"array\",\r",
+									"          \"items\": [\r",
+									"            {\r",
+									"              \"type\": \"string\"\r",
+									"            },\r",
+									"            {\r",
+									"              \"type\": \"integer\"\r",
+									"            },\r",
+									"            {\r",
+									"              \"type\": \"integer\"\r",
+									"            }\r",
+									"          ]\r",
+									"        },\r",
+									"        \"u_salary_1_5_year\": {\r",
+									"          \"type\": \"integer\"\r",
+									"        }\r",
+									"      },\r",
+									"      \"required\": [\r",
+									"        \"u_age\",\r",
+									"        \"u_name\",\r",
+									"        \"u_salary_1_5_year\"\r",
+									"      ]\r",
+									"    },\r",
+									"    \"qa_salary_after_12_months\": {\r",
+									"      \"type\": \"number\"\r",
+									"    },\r",
+									"    \"qa_salary_after_6_months\": {\r",
+									"      \"type\": \"integer\"\r",
+									"    },\r",
+									"    \"start_qa_salary\": {\r",
+									"      \"type\": \"integer\"\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"person\",\r",
+									"    \"qa_salary_after_12_months\",\r",
+									"    \"qa_salary_after_6_months\",\r",
+									"    \"start_qa_salary\"\r",
+									"  ]\r",
+									"}\r",
+									"\r",
+									"\r",
+									"\r",
+									"var data1 = JSON.parse(responseBody);\r",
+									"\r",
+									"pm.test('Schema is valid', function () {\r",
+									"    pm.expect(tv4.validate(data1, schema)).to.be.true;\r",
+									"   \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Jane",
+									"type": "text"
+								},
+								{
+									"key": "age",
+									"value": "28",
+									"type": "text"
+								},
+								{
+									"key": "salary",
+									"value": "2500",
+									"type": "text"
+								},
+								{
+									"key": "auth_token",
+									"value": "{{auth_token}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://188.130.138.105:5001/user_info",
+							"protocol": "http",
+							"host": [
+								"188",
+								"130",
+								"138",
+								"105"
+							],
+							"port": "5001",
+							"path": [
+								"user_info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DZ_1.3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// берем дату из респонса\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable(\"u_salary_1_5_year\", jsonData.person.u_salary_1_5_year);\r",
+									"\r",
+									"var response_salary = jsonData.start_qa_salary;\r",
+									"var u_salary_1_5_year = jsonData.person.u_salary_1_5_year;\r",
+									"var salary_6_months = jsonData.qa_salary_after_6_months;\r",
+									"var salary_12_months = jsonData.qa_salary_after_12_months;\r",
+									"console.log(\"response_salary = \" + response_salary);\r",
+									"console.log(\"start salary = \" + jsonData.start_qa_salary);\r",
+									"console.log(\"salary in 1.5 years = \" + jsonData.person.u_salary_1_5_year);\r",
+									"console.log(\"salary in 6 months = \" + jsonData.qa_salary_after_6_months);\r",
+									"console.log(\"salary in 12 months = \" + jsonData.qa_salary_after_12_months);\r",
+									"\r",
+									"//берем дату из реквеста\r",
+									"var request_data = request.data;\r",
+									"var initial_salary = request_data.salary;\r",
+									"console.log(\"initial_salary = \" + initial_salary);\r",
+									"\r",
+									"//сравниваем переменные (они должны быть одного типа: int=int, string=string)\r",
+									"pm.test(\"comparison \", function () {\r",
+									"pm.expect(initial_salary).to.eql(response_salary.toString());\r",
+									"});\r",
+									"\r",
+									"//проверка коэффициента\r",
+									"\r",
+									"pm.test(\"coefficient_test_1.5_year\", function () {\r",
+									"    pm.expect(+u_salary_1_5_year).to.eql((response_salary*4));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"coefficient_test_6_months\",function (){\r",
+									"    pm.expect(parseInt(salary_6_months)).to.eql((initial_salary*2));\r",
+									"})\r",
+									"\r",
+									"pm.test(\"coefficient_test_12_months\", function(){\r",
+									"    pm.expect(parseInt(salary_12_months)).to.eql((initial_salary*2.9));\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Jane",
+									"type": "text"
+								},
+								{
+									"key": "age",
+									"value": "28",
+									"type": "text"
+								},
+								{
+									"key": "salary",
+									"value": "2500",
+									"type": "text"
+								},
+								{
+									"key": "auth_token",
+									"value": "{{auth_token}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://188.130.138.105:5001/user_info",
+							"protocol": "http",
+							"host": [
+								"188",
+								"130",
+								"138",
+								"105"
+							],
+							"port": "5001",
+							"path": [
+								"user_info"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
